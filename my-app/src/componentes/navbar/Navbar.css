@@ -1,0 +1,17 @@
+.cursor {
+    cursor: pointer;
+    color: white;
+  }
+  
+  .text-decorator-none {
+    text-decoration: none;
+    cursor: pointer;
+    color: rgba(53, 63, 207, 0.76); ;
+  }
+  
+  .LogoBlogPessoal {
+    display: flex;
+    justify-content: space-around;
+    background-color: black;
+    color: rgba(53, 63, 207, 0.76);
+  }

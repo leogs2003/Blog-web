@@ -1,0 +1,22 @@
+.imagem2{
+    background-image: url(https://media-exp1.licdn.com/dms/image/C4E03AQF2HwiEryVBKw/profile-displayphoto-shrink_800_800/0/1658415371503?e=1671062400&v=beta&t=fwXtXORruQV3w4X_aUSTLAFJHG7tcJ9Iw6mFi1MuAkU);
+    background-repeat: no-repeat;
+    width: 100vh;
+    min-height: 100vh;
+    background-size: cover;
+    background-position: center;
+
+}
+
+.textos2{
+    font-weight: bold !important; 
+}
+
+.btnCancelar{
+    margin-right: 20px !important;
+
+}
+
+.text-decorator-none2{
+    text-decoration: none;
+}

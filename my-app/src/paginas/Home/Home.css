@@ -1,0 +1,23 @@
+.bemVinde {
+    color: black;
+    font-weight: bold;
+    background-color: #80d4ea;
+    border-style: solid;
+  }
+  
+  .h5 {
+    color: black;
+    font-weight: bold;
+  }
+  
+  /*.verPost {
+    background-color: blue !important;
+    border-color: #ecc2ea !important;
+     background-color: #62c9cc !important;
+     color: black !important;
+     border-bottom-width: thick !important;
+  }*/
+  
+  .text-decorator-none {
+    text-decoration: none;
+  }
