@@ -1,6 +1,6 @@
 /*Estilos da página index.html*/
 
-.center{
+.center {
     text-align: center;
 }
 
@@ -15,6 +15,11 @@
   font-size: 30px;
 }
 
+#menu li {
+  display: inline;
+  padding: 60px;
+  
+}
 
 
 
