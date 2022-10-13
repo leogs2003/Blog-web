@@ -1,0 +1,26 @@
+{
+    "compilerOptions": {
+      "target": "es5",
+      "lib": [
+        "dom",
+        "dom.iterable",
+        "esnext"
+      ],
+      "allowJs": true,
+      "skipLibCheck": true,
+      "esModuleInterop": true,
+      "allowSyntheticDefaultImports": true,
+      "strict": true,
+      "forceConsistentCasingInFileNames": true,
+      "noFallthroughCasesInSwitch": true,
+      "module": "esnext",
+      "moduleResolution": "node",
+      "resolveJsonModule": true,
+      "isolatedModules": true,
+      "noEmit": true,
+      "jsx": "react-jsx"
+    },
+    "include": [
+      "src"
+, "blogzin/web/my-app/src/setupTests.ts", "blogzin/web/my-app/src/reportWebVitals.ts", "blogzin/web/my-app/src/index.tsx", "blogzin/web/my-app/src/App.tsx", "blogzin/web/my-app/src/App.test.tsx", "blogzin/web/my-app/src/react-app-env.d.ts", "Postagem.ts", "blogzin/web/my-app/src/model/Tema.ts", "blogzin/web/my-app/src/model/User.ts", "blogzin/web/my-app/src/model/UserLogin.ts", "blogzin/web/my-app/src/paginas/cadastroUsuario/CadastroUsuario.tsx"    ]
+  }
