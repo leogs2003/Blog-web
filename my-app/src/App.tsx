@@ -15,7 +15,7 @@ import DeletarTema from "./components/temas/deletarTemas/DeletarTema";
 import { Provider } from "react-redux";
 import store from "../../../../src/store/Store";
 
-function () {
+function App() {
   return (
     <Provider store={store}>
     <Router>
@@ -42,4 +42,4 @@ function () {
   );
 }
 
-export default <App />;
+export default App;
