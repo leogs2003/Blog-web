@@ -1,35 +1,20 @@
-/*Estilos da página index.html*/
-
-.center {
-    text-align: center;
+.spinner {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 9px solid;
+  border-color: #dbdcef;
+  border-right-color: #474bff;
+  animation: spinner-d3wgkg 1s infinite linear;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
 }
 
-
-.flex-container {
-   
-  background-color: #f1f1f1;
-  width: 100px;
-  margin: 10px;
-  text-align: center;
-  line-height: 75px;
-  font-size: 30px;
+@keyframes spinner-d3wgkg {
+  to {
+      transform: rotate(1turn);
+  }
 }
-
-#menu li {
-  display: inline;
-  padding: 60px;
-  
-}
-
-
-
-
-
-
-/*Estilos da página contato.html*/
-
-
-
-
-
-
