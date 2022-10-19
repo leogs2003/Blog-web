@@ -1,31 +1,23 @@
-.bemVinde {
-    color: black;
-    font-weight: bold;
-    background-color: #80d4ea;
-    border-style: solid;
-  }
-  
-
-  .h5 {
-    color: black;
-    font-weight: bold;
-  }
-  
-
-
-.título {
-    color : white ;
-    font-weight: bold !important; 
+.logo {
+  border-radius: 50%;
+  padding: 0.5vw;
 }
 
-  /*.verPost {
-    background-color: blue !important;
-    border-color: #ecc2ea !important;
-     background-color: #62c9cc !important;
-     color: black !important;
-     border-bottom-width: thick !important;
-  }*/
-  
-  .text-decorator-none {
-    text-decoration: none;
-  }
+.caixa {
+  background-color: #50a2b1;
+}
+
+.titulo {
+  color: white !important;
+  font-weight: bold !important;
+}
+
+.botao {
+  border-color: #131111 !important;
+  background-color: #140e19;
+  color: white !important;
+}
+
+.postagens {
+  background-color: white;
+}
