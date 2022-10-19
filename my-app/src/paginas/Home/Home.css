@@ -5,11 +5,19 @@
     border-style: solid;
   }
   
+
   .h5 {
     color: black;
     font-weight: bold;
   }
   
+
+
+.título {
+    color : white ;
+    font-weight: bold !important; 
+}
+
   /*.verPost {
     background-color: blue !important;
     border-color: #ecc2ea !important;
