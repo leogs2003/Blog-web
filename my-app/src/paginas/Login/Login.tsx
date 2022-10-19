@@ -1,160 +1,213 @@
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import TextField from "@mui/material/TextField";
-import { Button } from "@mui/material";
+import { Grid, Input, InputAdornment, InputLabel, TextField, Typography } from "@material-ui/core";
+import { Box } from "@mui/material";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ChangeEvent, useEffect, useState } from "react";
-import UsuarioLogin from "../../model/UsuarioLogin";
-import { login } from "../../services/Service";
+import { Button } from "@material-ui/core";
 import "./Login.css";
+import { login } from "../../services/Service";
 import { useDispatch } from "react-redux";
-import { addToken } from "../../store/tokens/actions";
+import { addToken, addId } from "../../store/tokens/actions";
 import { toast } from "react-toastify";
-import { useState, useEffect } from 'react';
+import { UserLogin } from "../../model/UserLogin";
+import GoogleLogin from "react-google-login";
+import { SyncLoader } from "react-spinners";
 
-function Login() {
-  const [token, setToken] = useState("");
-  const dispatch = useDispatch();
-  let navigate = useNavigate();
+export function Login() {
 
-  const [userLogin, setUserLogin] = useState<UsuarioLogin>({
-    id: 0,
-    nome: "",
-    usuario: "",
-    senha: "",
-    foto: "",
-    token: "",
-  });
+    const [loading, setLoading] = useState(false);
 
-  const [form, setForm] = useState(false);
-
-  useEffect(() => {
-    if (
-      userLogin.usuario !== "" &&
-      userLogin.senha !== "" &&
-      userLogin.senha.length >= 8
-    ) {
-      setForm(true);
-    }
-  }, [userLogin]);
-
-  function updateModel(event: ChangeEvent<HTMLInputElement>) {
-    setUserLogin({
-      ...userLogin,
-      [event.target.name]: event.target.value,
+    let navigate = useNavigate()
+    const dispatch = useDispatch()
+    // const [token, setToken] = useLocalStorage('token')
+    const [token, setToken] = useState('')
+    const [entrar, setEntrar] = useState(false)
+    const[userLogin, setUserLogin] = useState<UserLogin>({
+        id:0,
+        nome: '',
+        usuario: '',
+        senha: '',
+        foto: '',
+        token: ''
     });
-  }
 
-  async function conectar(event: ChangeEvent<HTMLFormElement>) {
-    event.preventDefault();
-    try {
-      await login(`/usuarios/logar`, userLogin, setToken);
+    const [respUserLogin, setRespUserLogin] = useState<UserLogin>({
+      id: 0,
+      nome: '',
+      usuario: '',
+      senha: '',
+      foto: '',
+      token: '',
+    });
 
-      toast.success("Usuario logado com sucesso!!", {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        theme: "dark",
-        progress: undefined,
-      });
-    } catch (error) {
-      toast.error("Dados insonsistentes. Erro ao logar!", {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        theme: "dark",
-        progress: undefined,
-      });
+    function updateModel(event: ChangeEvent<HTMLInputElement>){
+        setUserLogin({
+            ...userLogin,
+            [event.target.name]: event.target.value
+        })
+        
     }
-  }
 
-  useEffect(() => {
-    if (token !== "") {
-      dispatch(addToken(token));
-      navigate("/home");
+    async function conectar(event:ChangeEvent<HTMLFormElement>){
+        event.preventDefault();
+        setLoading(true)
+        try{
+          await login(`/usuarios/logar`,userLogin, setRespUserLogin);
+          
+          toast.success('Usuário logado com sucesso!', {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            theme: "colored",
+            progress: undefined
+        });
+
+        }catch(error){
+          setLoading(false)
+          toast.error('Dados do usuário inconsistentes. Erro ao logar!', {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            theme: "colored",
+            progress: undefined
+        });
+        }
+
+        
     }
-  }, [token]);
 
+    useEffect(() => {
+      if(userLogin.usuario.length >= 4 &&  userLogin.senha.length>=8){
+          setEntrar(true)
+      } else{
+        setEntrar(false)
+      }
+    },[userLogin])
+
+
+    useEffect(() => {
+        if(token!==''){
+            
+            dispatch(addToken(token))
+            navigate('/home')
+        }
+    }, [token]);
+
+    useEffect(()=>{
+      if(respUserLogin.token !== ''){
+        dispatch(addToken(respUserLogin.token))
+        dispatch(addId(respUserLogin.id.toString()))
+        console.log ('Token:'+respUserLogin.token);
+        
+        navigate('/home');
+      }
+    },[respUserLogin.token])
+
+    useEffect(() => {
+
+    })
+
+
+  const [nome, setNome] = useState();
+	const [usuario, setUsuario] = useState();
+	const [foto, setFoto] = useState();
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+	const responseGoogle = (response:any) => {
+		console.log(response);
+		const {
+			profileObj: { nome, usuario, imageUrl },
+		} = response;
+		setNome(nome);
+		setUsuario(usuario);
+		setFoto(imageUrl);
+		setIsLoggedIn(true);
+	};
   return (
-    <Grid container direction="row" justifyContent="center" alignItems="center">
-      <Grid alignItems="center" xs={6}>
-        <Box paddingX={20}>
-          <form onSubmit={conectar} className="margin-top">
-            <Typography
-              variant="h3"
-              gutterBottom
-              color="textPrimary"
-              component="h3"
-              align="center"
-              className="titulo1"
-            >
-              Entrar
-            </Typography>
-            <TextField
-              onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                updateModel(event)
-              }
-              value={userLogin.usuario}
-              id="usuario"
-              name="usuario"
-              label="usuário"
-              variant="outlined"
-              margin="normal"
-              fullWidth
-            />
-            <TextField
-              onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                updateModel(event)
-              }
-              value={userLogin.senha}
-              id="senha"
-              label="senha"
-              variant="outlined"
-              name="senha"
-              margin="normal"
-              type="password"
-              fullWidth
-            />
+    <>
+      <Grid
+        container
+        direction="row"
+        alignItems="center"
+        justifyContent="center"
+        className='login'
+      >
+          <Box paddingX={10} className='box'>
+            <form onSubmit={conectar}>
+            <Typography variant="h3" gutterBottom color="textPrimary" component="h3" align="center" className='titulo'><img src='https://i.imgur.com/RLltIpo.png' className='logo-size'></img></Typography>
+            <Typography variant="h5" className="titulo-blog">Katanosaka Blog</Typography>
+              <Typography variant="h3" gutterBottom color ='textPrimary' component='h3' align="center" className="textos1">Login</Typography>
+              <TextField
+                onChange={(event:ChangeEvent<HTMLInputElement>)=>updateModel(event)}
+                value={userLogin.usuario}
+                id="usuario"
+                name="usuario"
+                label = "E-mail"
+                variant="filled"
+                type="e-mail"
+                fullWidth
+                margin="normal"
+                className='fundo'
+              />
+              <TextField
+                onChange={(event:ChangeEvent<HTMLInputElement>)=>updateModel(event)}
+                value={userLogin.senha}
+                id="senha"
+                type="password"
+                name="senha"
+                label="Senha"
+                fullWidth
+                variant="filled"
+                margin="normal"
+              />
+            <Box marginTop={5} textAlign='center'>
+                    <Button type="submit" variant="contained" disabled={!entrar}>
+                        Entrar
+                    </Button>
+                    {loading?(<SyncLoader className="loading-login" size={5} color={'#36D7B7'} loading={loading}/>)
+                    :(<SyncLoader className="loading-login" size={0} color={'#36D7B7'} loading={true}/>)}
+                    
 
-            <Box marginTop={2} textAlign="center">
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                disabled={!form}
-              >
-                Logar
-              </Button>
             </Box>
-          </form>
-
-          <Box display="flex" justifyContent="center" marginTop={2}>
-            <Box marginRight={1}>
-              <Typography variant="subtitle1" gutterBottom align="center">
-                Não tem uma conta?
-              </Typography>
+                
+            </form>
+            <Box display='flex' justifyContent='center' marginTop={2}>
+                <Box marginRight={1}>
+                    <Typography variant='subtitle1' gutterBottom align='center'>Não tem uma conta?</Typography>
+                </Box>
+                    <Link to='/cadastrousuario' className="text-decorator-none">
+                      <Typography  gutterBottom align='center' className='textos-link'>Registre-se</Typography>
+                    </Link>
+                    
             </Box>
-            <Link to="/cadastrar">
-              <Typography
-                variant="subtitle1"
-                gutterBottom
-                align="center"
-                className="texto1"
-              >
-                Cadastre-se
-              </Typography>
-            </Link>
+            
           </Box>
-        </Box>
-      </Grid>
+          
+          
 
-      <Grid xs={6} className="imagem1"></Grid>
-    </Grid>
+      </Grid>
+      {/* <GoogleLogin
+				clientId="405026633290-pnhkq91b351crvmg323n2nt5m8n1jt7m.apps.googleusercontent.com"
+        buttonText="Entrar com Google"
+				onSuccess={responseGoogle}
+				onFailure={responseGoogle}
+			/>
+			{isLoggedIn ? (
+				<div style={{ textAlign: "center" }}>
+					<h1>User Information</h1>
+					<img className="profile" src={foto} alt="Profile" />
+					<p>nome: {nome}</p>
+					<p>usuario: {usuario}</p>
+				</div>
+			) : (
+				""
+			)} */}
+    </>
   );
 }
-export default Login;
+
