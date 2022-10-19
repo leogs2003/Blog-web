@@ -4,8 +4,8 @@ import  './index.css' ;
 importar  App  de  './App' ;
 importar  reportWebVitals  de  './reportWebVitals' ;
 ReactDOM . renderizar (
-< Reagir . Modo Estrito >
-< Aplicativo  / >
+< Reagir . Modo Estrito >,
+< App  / >,
 < / Reagir . StrictMode > ,
 documento . getElementById ( 'root' )
 ) ;
